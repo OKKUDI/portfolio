@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>그림 모음 — 지민</title>
+
+  <style>
+    /* 그림을 4개의 세로 칸에 자연스럽게 쌓기 */
+.gallery {
+  display: block;
+  column-count: 4;
+  column-gap: 28px;
+}
+
+.gallery a {
+  display: block;
+  break-inside: avoid;
+  margin: 0 0 32px;
+}
+
+/* 가로 그림도 한 칸 안에 들어가도록 */
+.gallery .wide {
+  grid-column: auto;
+}
+
+/* 원래 그림 비율 유지 */
+.gallery img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* 크기와 여백에 작은 차이를 줘요 */
+.gallery a:nth-child(3n + 2) {
+  width: 88%;
+  margin-left: auto;
+}
+
+.gallery a:nth-child(3n) {
+  width: 94%;
+}
+
+/* 화면이 좁아지면 3열 → 2열 */
+@media (max-width: 1000px) {
+  .gallery {
+    column-count: 3;
+  }
+}
+
+@media (max-width: 600px) {
+  .gallery {
+    column-count: 2;
+    column-gap: 16px;
+  }
+
+  .gallery a {
+    margin-bottom: 20px;
+  }
+}
+    /* 페이지 상단: 이름과 그림 메뉴 */
+.site-header {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 35px 30px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+}
+
+.site-name {
+  color: #795f6d;
+  font-family: Georgia, serif;
+  font-size: 42px;
+  letter-spacing: 5px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.header-menu {
+  display: flex;
+  align-items: center;
+  gap: clamp(20px, 5vw, 70px);
+}
+
+.header-menu a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 65px;
+  height: 65px;
+  color: #947d88;
+  border-radius: 12px;
+  transition: transform 0.2s, color 0.2s;
+}
+
+.header-menu a:hover {
+  transform: translateY(-4px);
+  color: #674955;
+}
+
+.header-menu a:focus-visible,
+.site-name:focus-visible {
+  outline: 2px solid #947d88;
+  outline-offset: 5px;
+}
+
+.header-menu a[aria-current="page"] {
+  color: #674955;
+}
+
+.header-menu svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* 휴대폰에서는 간격과 아이콘 크기를 줄여요 */
+@media (max-width: 600px) {
+  .site-header {
+    padding: 22px 16px;
+    gap: 12px;
+  }
+
+  .site-name {
+    font-size: 27px;
+    letter-spacing: 2px;
+  }
+
+  .header-menu {
+    gap: 8px;
+  }
+
+  .header-menu a {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header-menu a {
+    transition: none;
+  }
+}
+    /* 페이지의 기본 색과 글꼴 */
+    body {
+      margin: 0;
+      background: #fffdfa;
+      color: #65535e;
+      font-family: "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    }
+
+    /* 내용이 들어가는 공간 */
+    main {
+      max-width: 1100px;
+      margin: auto;
+      padding: 40px 24px;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .back {
+      display: inline-block;
+      margin-bottom: 40px;
+      text-decoration: none;
+    }
+
+    h1 {
+      font-size: 36px;
+      font-weight: normal;
+      margin-bottom: 12px;
+    }
+
+    .intro {
+      margin-bottom: 40px;
+    }
+
+    /* 그림을 두 줄의 세로 칸에 배치 */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+      align-items: start;
+    }
+
+    .gallery a {
+      display: block;
+    }
+
+    .gallery img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    /* 가로로 긴 첫 두 그림은 넓게 보여줘요 */
+    .wide {
+      grid-column: 1 / -1;
+    }
+
+    /* 휴대폰에서는 한 칸씩 보여줘요 */
+    @media (max-width: 600px) {
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+
+  <!-- 이름을 누르면 첫 화면으로 이동 -->
+  <a class="site-name" href="index.html">지민</a>
+
+  <nav class="header-menu" aria-label="주요 메뉴">
+
+    <!-- 액자: 작품 모음 -->
+    <a href="illustrations.html"
+       aria-label="작품 모음"
+       aria-current="page">
+      <svg viewBox="0 0 80 80" aria-hidden="true">
+        <path d="M32 10 L65 12 L63 51 L31 49 Z"/>
+        <path d="M12 43 L42 38 L47 68 L17 72 Z"/>
+      </svg>
+    </a>
+
+    <!-- 책: 그림책 -->
+    <a href="books.html" aria-label="그림책">
+      <svg viewBox="0 0 80 80" aria-hidden="true">
+        <path d="M20 14 Q39 18 60 10 L61 64
+                 Q40 59 20 65 Z"/>
+        <path d="M25 17 L25 60"/>
+        <path d="M20 65 Q41 64 61 68"/>
+      </svg>
+    </a>
+
+    <!-- 얼굴: 작가 소개 -->
+    <a href="about.html" aria-label="작가 소개">
+      <svg viewBox="0 0 80 80" aria-hidden="true">
+        <path d="M16 46 C8 8 68 5 65 46"/>
+        <path d="M21 37 C21 16 59 16 59 38
+                 L58 49 C55 70 25 70 22 49 Z"/>
+        <path d="M22 37 Q32 34 34 23"/>
+        <path d="M34 24 Q36 36 43 36"/>
+        <path d="M43 24 Q47 36 58 38"/>
+        <path d="M20 43 C9 36 10 57 23 53"/>
+        <path d="M60 43 C71 36 70 57 58 53"/>
+        <circle cx="31" cy="44" r="1.5"/>
+        <circle cx="49" cy="44" r="1.5"/>
+        <path d="M36 53 Q40 57 44 53"/>
+      </svg>
+    </a>
+
+    <!-- 새: 연락처와 SNS -->
+    <a href="contact.html" aria-label="연락처와 SNS">
+      <svg viewBox="0 0 80 80" aria-hidden="true">
+        <path d="M18 42 C11 23 29 18 39 30
+                 Q53 23 64 26 L74 13 L67 37
+                 C61 64 31 68 18 42 Z"/>
+        <path d="M17 36 L7 44 L20 42"/>
+        <path d="M39 39 Q47 50 58 38"/>
+        <circle cx="24" cy="33" r="1"/>
+        <path d="M40 61 L37 68 M47 60 L45 67"/>
+      </svg>
+    </a>
+
+  </nav>
+</header>
+  <main>
+  <p style="font-size: 12px; letter-spacing: 3px;">
+    ABOUT
+  </p>
+
+  <h1>안녕하세요, 지민입니다.</h1>
+
+  <div style="
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 45px;
+    margin-top: 45px;
+  ">
+
+    <!-- 소개 옆에 보여줄 그림 -->
+    <img
+      src="assets/work-3.jpg"
+      alt="꽃을 안은 소녀 일러스트"
+      style="
+        width: 100%;
+        max-width: 340px;
+        height: auto;
+      "
+    >
+
+    <!-- 원하는 소개 문장으로 수정해도 돼요 -->
+    <div style="
+      flex: 1 1 250px;
+      font-size: 17px;
+      line-height: 2.2;
+    ">
+      <p>
+        소중한 감정과 따뜻한 이야기를 그리는<br>
+        일러스트레이터 지민입니다.
+      </p>
+
+      <p>
+        저의 그림들을 이곳에 모았습니다.<br>
+        천천히 둘러봐 주세요.
+      </p>
+    </div>
+
+  </div>
+  </main>
+</body>
+</html>
