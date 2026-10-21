@@ -3,11 +3,222 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>지민의 그림책</title>
-</head>
+  <meta name="description" content="동화 같은 이야기를 그리는 지민의 일러스트 포트폴리오">
+  <title>지민 — 작은 그림 작업실</title>
+  <style>
+    /* CSS: 색, 크기, 위치를 정해요. */
+    :root {
+      --ink: #65535e;
+      --pink: #f1dfe5;
+      --paper: #fffdfa;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: white;
+      font-family: Georgia, "Apple SD Gothic Neo", "Malgun Gothic", serif;
+    }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button { font: inherit; }
+    a { color: inherit; }
+    button, a { touch-action: manipulation; }
+    [hidden] { display: none !important; }
+    .skip-link { position: fixed; top: -80px; left: 15px; z-index: 10; }
+    .skip-link:focus { top: 15px; padding: 12px; background: white; }
+    .home { max-width: 1440px; margin: auto; padding: 12px 20px 20px; }
+    .topline { display: flex; justify-content: space-between; gap: 20px; padding: 16px 12px; font-size: 11px; letter-spacing: 2px; }
 
+    /* 배경 그림과 클릭 영역을 같은 상자 안에 넣어요.
+       그림이 작아지면 클릭 영역도 같은 비율로 작아져요. */
+    .studio { position: relative; width: 100%; aspect-ratio: 2420 / 1668; }
+    .studio-image { display: block; width: 100%; height: 100%; object-fit: contain; }
+    .hotspot {
+      position: absolute;
+      display: block;
+      border: 1px solid transparent;
+      border-radius: 20px;
+      text-decoration: none;
+      background: transparent;
+      transition: background .2s, border-color .2s;
+    }
+    .hotspot:hover, .hotspot:focus-visible {
+      background: #dfb9c220;
+      border-color: #b28c9b;
+      outline: none;
+    }
+    .hotspot span {
+      position: absolute;
+      left: 50%; bottom: 8px;
+      transform: translateX(-50%);
+      padding: 8px 15px;
+      border-radius: 30px;
+      white-space: nowrap;
+      background: #fffdf7ed;
+      color: #705466;
+      font-size: 13px;
+      box-shadow: 0 2px 8px #70546612;
+    }
+    /* left = 왼쪽에서 얼마나 떨어질지, top = 위에서 얼마나 떨어질지 */
+    .illustrations { left: 10%; top: 7%; width: 30%; height: 66%; }
+    .about { left: 45%; top: 38%; width: 22%; height: 46%; }
+    .contact { left: 71%; top: 13%; width: 22%; height: 36%; }
+    .books { left: 73%; top: 64%; width: 18%; height: 26%; }
+    .signature {
+      position: absolute; left: 4%; top: 77%; width: 27%; height: 18%;
+      background: #fff; display: flex; flex-direction: column; justify-content: center; padding-left: 6%;
+    }
+    .signature h1 { font-size: clamp(25px, 5.5vw, 76px); font-weight: 400; letter-spacing: .14em; margin: 0; }
+    .signature p { font-size: clamp(8px, 1vw, 12px); letter-spacing: 4px; margin: 10px 0 0; }
+    .contact-word {
+      position: absolute; left: 74%; top: 18%; width: 13%; height: 4.5%;
+      display: flex; justify-content: center; align-items: center; background: white;
+      font-size: clamp(10px, 1.7vw, 24px); letter-spacing: 1px; pointer-events: none;
+    }
+    .hint { margin: 5px 0 25px; text-align: center; font-size: 12px; color: #8a7b83; }
+    .mobile-nav { display: none; }
+    footer { text-align: center; font-size: 10px; letter-spacing: 2px; color: #8a7b83; padding: 20px; }
+
+    /* 메뉴를 눌러 들어가는 내부 화면 */
+    .page { max-width: 1120px; margin: auto; padding: 30px 28px 60px; min-height: 85vh; }
+    .back { display: inline-block; margin-bottom: 40px; font-size: 14px; text-decoration: none; padding: 12px 0; }
+    .eyebrow { font-size: 11px; letter-spacing: 3px; color: #937481; }
+    h2 { font-weight: 400; font-size: clamp(30px, 5vw, 50px); margin: 12px 0 22px; }
+    h2:focus { outline: none; }
+    .intro { font-size: 15px; line-height: 1.9; margin-bottom: 35px; }
+    .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+    .artwork { border: none; padding: 0; background: transparent; cursor: zoom-in; text-align: left; color: var(--ink); }
+    .artwork img { width: 100%; height: 390px; object-fit: contain; background: #faf9f7; display: block; }
+    .artwork span { display: block; padding: 12px 0; font-size: 12px; }
+    .artwork:first-child, .artwork:nth-child(2) { grid-column: 1 / -1; }
+    .artwork:first-child img, .artwork:nth-child(2) img { height: auto; }
+    .about-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 55px; align-items: center; }
+    .about-layout img { width: 100%; max-height: 570px; object-fit: contain; }
+    .about-layout p { line-height: 2.2; }
+    .placeholder { border-top: 1px solid #e9dfe2; padding-top: 30px; line-height: 2; }
+    .contact-list { display: grid; grid-template-columns: 110px 1fr; gap: 25px; padding: 30px 0; border-top: 1px solid #e9dfe2; }
+    .contact-list dt { font-size: 14px; }
+    .contact-list dd { margin: 0; color: #8a7b83; font-size: 14px; }
+    dialog { padding: 18px; border: 0; border-radius: 6px; width: min(1400px, 96vw); max-height: 94vh; background: var(--paper); }
+    dialog::backdrop { background: #292027b3; }
+    dialog img { display: block; width: 100%; max-height: 80vh; object-fit: contain; }
+    .close { display: block; margin: 0 0 12px auto; border: 1px solid #cbbcc3; border-radius: 30px; background: white; padding: 9px 18px; cursor: pointer; color: var(--ink); }
+    :focus-visible { outline: 2px solid #95657c; outline-offset: 4px; }
+    @media (max-width: 650px) {
+      .home { padding: 8px 8px 20px; }
+      .topline { font-size: 9px; letter-spacing: 1px; }
+      .hotspot span { font-size: 10px; padding: 5px 8px; bottom: 0; }
+      .signature p { letter-spacing: 2px; }
+      .mobile-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 30px 18px 20px; }
+      .mobile-nav a { text-decoration: none; text-align: center; border: 1px solid #e7dbe0; padding: 16px 10px; border-radius: 8px; font-size: 14px; background: var(--paper); }
+      .hint { margin: 20px 0; font-size: 11px; }
+      .gallery, .about-layout { grid-template-columns: 1fr; gap: 24px; }
+      .artwork img { height: auto; }
+      .page { padding: 20px 20px 50px; }
+      .about-layout img { max-height: 360px; }
+    }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  </style>
+</head>
 <body>
-  <h1>지민의 그림책</h1>
-  <p>안녕하세요. 동화 같은 이야기를 그리는 지민입니다.</p>
+  <a class="skip-link" href="#illustrations">작품 모음으로 바로 가기</a>
+
+  <!-- HTML: 화면에 보여줄 그림과 글이에요. -->
+  <main>
+    <section id="home" class="home" aria-label="지민의 작은 그림 작업실">
+      <div class="topline"><span>JIMIN · ILLUSTRATOR</span><span>작은 그림 작업실</span></div>
+      <div class="studio">
+        <!-- 같은 비율의 완성 그림으로 이 파일을 교체하면 배치를 유지할 수 있어요. -->
+        <img class="studio-image" src="assets/studio-sketch.png" alt="액자들이 걸린 벽, 창문 안에서 그림을 그리는 작가, 꽃을 물고 온 새와 책이 있는 작업실 스케치">
+        <div class="signature"><h1>지민</h1><p>PICTURES & STORIES</p></div>
+        <div class="contact-word" aria-hidden="true">CONTACT</div>
+        <nav aria-label="그림 속 메뉴">
+          <a class="hotspot illustrations" href="#illustrations" aria-label="액자: 일러스트 작품 모음"><span>그림 보러 가기 ↗</span></a>
+          <a class="hotspot about" href="#about" aria-label="캐릭터: 작가 소개"><span>지민은 누구? ↗</span></a>
+          <a class="hotspot contact" href="#contact" aria-label="새: 연락처와 SNS"><span>연락하기 ↗</span></a>
+          <a class="hotspot books" href="#books" aria-label="책: 그림책 작업 모음"><span>그림책 보기 ↗</span></a>
+        </nav>
+      </div>
+      <p class="hint">그림 속 액자, 사람, 새, 책을 눌러보세요.</p>
+      <!-- 휴대폰에서는 누르기 편한 큰 메뉴도 보여줘요. -->
+      <nav class="mobile-nav" aria-label="모바일 메뉴">
+        <a href="#illustrations">그림</a><a href="#about">작가 소개</a>
+        <a href="#contact">컨택 · SNS</a><a href="#books">그림책</a>
+      </nav>
+    </section>
+
+    <section id="illustrations" class="page" hidden>
+      <a class="back" href="#home">← 작업실로 돌아가기</a>
+      <p class="eyebrow">ILLUSTRATIONS</p><h2 tabindex="-1">지민의 그림들</h2>
+      <p class="intro">그림을 누르면 크게 볼 수 있어요.</p>
+      <div class="gallery">
+        <button class="artwork" type="button"><img src="assets/work-1.jpg" loading="lazy" alt="물가에 있는 두 인물의 일러스트"><span>01</span></button>
+        <button class="artwork" type="button"><img src="assets/work-2.jpg" loading="lazy" alt="커다란 꽃 아래의 두 아이 일러스트"><span>02</span></button>
+        <button class="artwork" type="button"><img src="assets/work-3.jpg" loading="lazy" alt="꽃을 안은 소녀 일러스트"><span>03</span></button>
+        <button class="artwork" type="button"><img src="assets/work-4.jpg" loading="lazy" alt="페이스트리를 연상시키는 머리와 옷의 소녀 일러스트"><span>04</span></button>
+        <button class="artwork" type="button"><img src="assets/work-5.jpg" loading="lazy" alt="분홍 안경을 쓴 인물의 일러스트"><span>05</span></button>
+      </div>
+    </section>
+
+    <section id="about" class="page" hidden>
+      <a class="back" href="#home">← 작업실로 돌아가기</a>
+      <p class="eyebrow">ABOUT</p><h2 tabindex="-1">안녕하세요, 지민입니다.</h2>
+      <div class="about-layout"><img src="assets/work-3.jpg" alt="꽃을 안은 소녀 일러스트">
+        <!-- 이 소개 문장을 원하는 내용으로 바꿔보세요. -->
+        <p>동화 느낌의 일러스트를 그리는 지민입니다.<br>저의 그림들을 이곳에 모았습니다.<br>천천히 둘러봐 주세요.</p>
+      </div>
+    </section>
+
+    <section id="contact" class="page" hidden>
+      <a class="back" href="#home">← 작업실로 돌아가기</a>
+      <p class="eyebrow">CONTACT</p><h2 tabindex="-1">지민에게 보내는 편지</h2>
+      <p class="intro">작업 문의와 소식을 전할 공간입니다.</p>
+      <!-- 이메일과 SNS 주소를 정하면 아래 '준비 중'을 링크로 바꿔요. -->
+      <dl class="contact-list"><dt>이메일</dt><dd>준비 중입니다.</dd><dt>Instagram</dt><dd>준비 중입니다.</dd></dl>
+    </section>
+
+    <section id="books" class="page" hidden>
+      <a class="back" href="#home">← 작업실로 돌아가기</a>
+      <p class="eyebrow">BOOKS</p><h2 tabindex="-1">한 권의 이야기</h2>
+      <p class="placeholder">그림책 작업을 소개할 공간입니다.<br>책 제목과 내용을 준비하고 있어요.</p>
+    </section>
+  </main>
+  <footer>© JIMIN · ILLUSTRATION PORTFOLIO</footer>
+
+  <dialog id="art-dialog" aria-label="그림 크게 보기">
+    <button class="close" type="button">닫기 ×</button>
+    <img id="large-art" alt="">
+  </dialog>
+
+  <script>
+    // JavaScript: 메뉴를 누르면 선택한 화면만 보여줘요.
+    const screens = [...document.querySelectorAll('main > section')];
+    const screenNames = { home: '작은 그림 작업실', illustrations: '그림', about: '작가 소개', contact: '컨택', books: '그림책' };
+    const dialog = document.querySelector('#art-dialog');
+    const largeArt = document.querySelector('#large-art');
+
+    function showScreen() {
+      const requested = location.hash.slice(1) || 'home';
+      const current = Object.hasOwn(screenNames, requested) ? requested : 'home';
+      if (dialog.open) dialog.close();
+      screens.forEach(screen => { screen.hidden = screen.id !== current; });
+      document.title = `지민 — ${screenNames[current]}`;
+      window.scrollTo(0, 0);
+      if (current !== 'home') document.querySelector(`#${current} h2`).focus({ preventScroll: true });
+    }
+    window.addEventListener('hashchange', showScreen);
+    showScreen();
+
+    // 작품을 클릭하면 큰 그림이 열려요. Escape 키나 '닫기'로 닫을 수 있어요.
+    document.querySelectorAll('.artwork').forEach(button => {
+      button.addEventListener('click', () => {
+        const art = button.querySelector('img');
+        largeArt.src = art.src;
+        largeArt.alt = art.alt;
+        dialog.showModal();
+      });
+    });
+    document.querySelector('.close').addEventListener('click', () => dialog.close());
+  </script>
 </body>
 </html>
