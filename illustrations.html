@@ -138,114 +138,137 @@
       opacity: 0.85;
     }
 
-    /* 작품 팝업 */
-    .art-popup {
-      width: min(960px, 92vw);
-      max-height: 90vh;
-      max-height: 90dvh;
-      padding: 20px;
-      border: none;
-      border-radius: 12px;
-      background: #fffdfa;
-      color: #65535e;
-      overflow-y: auto;
-    }
+    /* 작품 팝업 — 화면에 크게 표시 */
+.art-popup {
+  width: 96vw;
+  max-width: none;
+  height: 94vh;
+  height: 94dvh;
+  max-height: 94vh;
+  max-height: 94dvh;
+  padding: 20px;
+  border: none;
+  border-radius: 12px;
+  background: #fffdfa;
+  color: #65535e;
+  overflow-y: auto;
+}
 
-    .art-popup::backdrop {
-      background: rgba(35, 28, 32, 0.7);
-    }
+/* 팝업이 열렸을 때만 적용 */
+.art-popup[open] {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
 
-    .popup-close {
-      display: block;
-      margin: 0 0 16px auto;
-      padding: 10px 16px;
-      border: 1px solid #d9cbd2;
-      border-radius: 30px;
-      background: #fffdfa;
-      color: inherit;
-      font: inherit;
-      cursor: pointer;
-    }
+/* 뒤쪽의 어두운 배경 */
+.art-popup::backdrop {
+  background: rgba(35, 28, 32, 0.7);
+}
 
-    .popup-image {
-      display: block;
-      width: 100%;
-      max-height: 65vh;
-      max-height: 65dvh;
-      object-fit: contain;
-    }
+/* 닫기 버튼 */
+.popup-close {
+  display: block;
+  flex-shrink: 0;
+  margin: 0 0 0 auto;
+  padding: 10px 16px;
+  border: 1px solid #d9cbd2;
+  border-radius: 30px;
+  background: #fffdfa;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
 
-    .popup-text {
-      max-width: 700px;
-      margin: 24px auto 12px;
-      overflow-wrap: anywhere;
-    }
+/* 남는 공간에 그림을 최대한 크게 표시 */
+.popup-image {
+  display: block;
+  flex: 1 1 0;
+  min-height: 0;
+  height: 0;
+  max-height: none;
+  width: 100%;
+  object-fit: contain;
+}
 
-    .popup-text h2 {
-      margin: 0 0 12px;
-      font-size: 24px;
-      font-weight: normal;
-    }
+/* 제목과 설명 */
+.popup-text {
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 700px;
+  max-height: 22vh;
+  max-height: 22dvh;
+  margin: 0 auto;
+  overflow-y: auto;
+  overflow-wrap: anywhere;
+}
 
-    .popup-text p {
-      margin: 0;
-      font-size: 15px;
-      line-height: 1.9;
-      white-space: pre-line;
-    }
+.popup-text h2 {
+  margin: 0 0 12px;
+  font-size: 24px;
+  font-weight: normal;
+}
 
-    /* 중간 화면은 3열 */
-    @media (max-width: 1000px) {
-      .gallery {
-        column-count: 3;
-      }
-    }
+.popup-text p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.9;
+  white-space: pre-line;
+}
 
-    /* 휴대폰은 2열 */
-    @media (max-width: 600px) {
-      .site-header {
-        padding: 22px 16px;
-        gap: 12px;
-      }
+/* 중간 화면은 3열 */
+@media (max-width: 1000px) {
+  .gallery {
+    column-count: 3;
+  }
+}
 
-      .site-name {
-        font-size: 27px;
-        letter-spacing: 2px;
-      }
+/* 휴대폰 화면 */
+@media (max-width: 600px) {
+  .site-header {
+    padding: 22px 16px;
+    gap: 12px;
+  }
 
-      .header-menu {
-        gap: 8px;
-      }
+  .site-name {
+    font-size: 27px;
+    letter-spacing: 2px;
+  }
 
-      .header-menu a {
-        width: 44px;
-        height: 44px;
-      }
+  .header-menu {
+    gap: 8px;
+  }
 
-      main {
-        padding: 25px 16px 50px;
-      }
+  .header-menu a {
+    width: 44px;
+    height: 44px;
+  }
 
-      .gallery {
-        column-count: 2;
-        column-gap: 14px;
-      }
+  main {
+    padding: 25px 16px 50px;
+  }
 
-      .gallery a {
-        margin-bottom: 14px;
-      }
+  .gallery {
+    column-count: 2;
+    column-gap: 14px;
+  }
 
-      .art-popup {
-        padding: 14px;
-      }
-    }
+  .gallery a {
+    margin-bottom: 14px;
+  }
 
-    @media (prefers-reduced-motion: reduce) {
-      .header-menu a,
-      .gallery img {
-        transition: none;
-      }
-    }
+  .art-popup {
+    padding: 14px;
+  }
+}
+
+/* 움직임 줄이기 설정 */
+@media (prefers-reduced-motion: reduce) {
+  .header-menu a,
+  .gallery img {
+    transition: none;
+  }
+}
   </style>
 </head>
 
@@ -348,6 +371,51 @@
              alt="분홍 안경을 쓴 인물"
              loading="lazy">
       </a>
+
+      <a href="assets/11.jpg"
+         data-title="나도민들레"
+         data-description="">
+        <img src="assets/11.jpg"
+             alt="설명">
+      </a>
+
+      <a href="assets/13.jpg"
+         data-title="나도민들레"
+         data-description="">
+        <img src="assets/13.jpg"
+             alt="설명">
+      </a>
+
+      <a href="assets/15.jpg"
+         data-title="나도민들레"
+         data-description="">
+        <img src="assets/15.jpg"
+             alt="설명">
+      </a>
+
+      <a href="assets/다음화에계속.png"
+         data-title="다음화에 계속"
+         data-description="">
+        <img src="assets/다음화에계속.png"
+             alt="설명">
+      </a>
+
+      <a href="assets/통아합발회.jpeg"
+         data-title="통일아침 합주발표회 포스터"
+         data-description="">
+        <img src="assets/통아합발회.jpeg"
+             alt="설명">
+      </a>
+
+      <a href="assets/통일아침_그세통 포스터 칠석.jpg"
+         data-title="칠석"
+         data-description="">
+        <img src="assets/통일아침_그세통 포스터 칠석.jpg"
+             alt="설명">
+      </a>
+
+
+      
 
       <!-- 새 그림은 이 위에 추가하면 돼요. -->
     </div>
